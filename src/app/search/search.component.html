@@ -1,0 +1,24 @@
+<form name="searchForm" role="form" novalidate [formGroup]="formModel" (ngSubmit)="onSubmit()">
+  <div class="form-group" [class.has-error]="formModel.get('title').hasError('minlength')">
+    <label for="productTitle">商品名称:</label>
+    <input formControlName="title" type="text" id="productTitle" placeholder="商品名称" class="form-control">
+    <span class="help-block" [class.hidden]="!formModel.get('title').hasError('minlength')">名称最小长度为3</span>
+  </div>
+  <div class="form-group" [class.has-error]="formModel.get('price').hasError('positivePriceValidator')">
+    <label for="productPrice">商品价格:</label>
+    <input formGroupName="price" formControlName="price" type="number" id="productPrice" placeholder="商品价格" class="form-control">
+    <span class="help-block" [class.hidden]="!formModel.get('price').hasError('positivePriceValidator')">
+      {{formModel.get('price').getError('positivePriceValidator')}}
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="productCategory">商品类别:</label>
+    <select formControlName="category" id="productCategory" class="form-control">
+      <option value="-1">请选择</option>
+      <option *ngFor="let c of categories" [value]="c">{{c}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <button type="button" class="btn btn-primary btn-block" (click)="onSearch()">搜索</button>
+  </div>
+</form>
